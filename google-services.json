@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "907274723326",
+    "project_id": "coolvert-3c1ed",
+    "storage_bucket": "coolvert-3c1ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907274723326:android:c392be6d8ef3dbf50deaaf",
+        "android_client_info": {
+          "package_name": "com.systemskings.coolvert"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB95bOxbom5obdUPgpD8Yqf2_e-RCa7Qj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
