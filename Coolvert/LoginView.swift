@@ -15,9 +15,6 @@ struct LoginView: View {
     @State private var errorMessage: String = ""
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
-    
-    
-    
     class AppDelegate: NSObject, UIApplicationDelegate {
         func application(_ application: UIApplication,
                          didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -36,7 +33,7 @@ struct LoginView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                 .padding()
-            
+            // comentario 
             SecureField("Senha", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
