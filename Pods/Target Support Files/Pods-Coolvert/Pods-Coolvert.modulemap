@@ -1,0 +1,6 @@
+framework module Pods_Coolvert {
+  umbrella header "Pods-Coolvert-umbrella.h"
+
+  export *
+  module * { export * }
+}
