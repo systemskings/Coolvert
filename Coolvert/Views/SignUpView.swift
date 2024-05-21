@@ -1,15 +1,15 @@
 //
-//  LoginView.swift
+//  SignUpView.swift
 //  Coolvert
 //
-//  Created by Alysson Reis on 14/05/2024.
+//  Created by Alysson Reis on 20/05/2024.
 //
 
 import SwiftUI
 import FirebaseCore
 import FirebaseAuth
 
-struct LoginView: View {
+struct SignUpView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var errorMessage: String = ""
@@ -33,24 +33,13 @@ struct LoginView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                 .padding()
-            // comentario 
+            // comentario
             SecureField("Senha", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                 .padding()
             
             HStack {
-                            Button(action: {
-                                signIn()
-                            }) {
-                                Text("Login")
-                                    .padding()
-                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                    .foregroundColor(.white)
-                                    .background(Color("Color1"))
-                                    .cornerRadius(8)
-                            }
-                            .padding()
 
                             Button(action: {
                                 signUp()
@@ -59,7 +48,7 @@ struct LoginView: View {
                                     .padding()
                                     .frame(minWidth: 0, maxWidth: .infinity)
                                     .foregroundColor(.white)
-                                    .background(Color("Color2"))
+                                    .background(Color.color4)
                                     .cornerRadius(8)
                             }
                             .padding()
@@ -72,24 +61,8 @@ struct LoginView: View {
         .padding()
     }
     
-    func signIn() {
-		
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                errorMessage = error.localizedDescription
-            } else {
-                errorMessage = "Login bem-sucedido!" + (authResult?.user.uid)!
-                
-                
-                email = ""
-                password = ""
-                
-            }
-        }
-    }
-    
     func signUp() {
-		
+        
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 errorMessage = error.localizedDescription
@@ -100,14 +73,8 @@ struct LoginView: View {
             }
         }
     }
-    
-    struct LoginView_Previews: PreviewProvider {
-		static var previews: some View {
-			LoginView()
-		}
-    }
 }
 
 #Preview {
-	LoginView()
+    SignUpView()
 }
