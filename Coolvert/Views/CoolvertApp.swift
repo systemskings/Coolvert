@@ -28,10 +28,7 @@ struct CoolvertApp: App {
         WindowGroup {
             NavigationView {
                 ContentView()
-                    .containerRelativeFrame([.horizontal, .vertical])
-                    .background(Gradient(colors: [Color.color2, Color.color3, Color.color4]).opacity(0.6))
             }
-            
         }
     }
 }
