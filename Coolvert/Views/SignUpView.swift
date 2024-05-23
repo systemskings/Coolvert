@@ -27,15 +27,32 @@ struct SignUpView: View {
     var body: some View {
         BackgroundView {
             VStack {
-                Text("Coolvert")
+                // Nome
+                TextField("Nome", text: $email)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                     .padding()
                 
+                // CPF / CNPJ
+                TextField("CPF / CNPJ", text: $email)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                    .padding()
+                
+                // Email
                 TextField("Email", text: $email)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                     .padding()
-                // comentario
+                
+                // Senha
                 SecureField("Senha", text: $password)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                    .padding()
+                
+                // Confirmar senhar
+                SecureField("Confirme a Senha", text: $password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                     .padding()
@@ -47,10 +64,10 @@ struct SignUpView: View {
                                 }) {
                                     Text("Cadastrar")
                                         .padding()
-                                        .frame(minWidth: 0, maxWidth: .infinity)
-                                        .foregroundColor(.white)
-                                        .background(Color.color4)
-                                        .cornerRadius(8)
+                                        .frame(maxWidth: 260)
+                                        .foregroundColor(Color.color9)
+                                        .background(Color.color2)
+                                        .cornerRadius(50)
                                 }
                                 .padding()
                             }
