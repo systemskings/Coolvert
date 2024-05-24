@@ -8,12 +8,18 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseAuth
+import FirebaseFirestore
 
 struct SignUpView: View {
+    @State private var name: String = ""
+    @State private var cpfCnpj: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var errorMessage: String = ""
+    @State private var confirmPassword = ""
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var isCheckedMartini: Bool = false
+    @State private var isCheckedMicrophone: Bool = false
     
     class AppDelegate: NSObject, UIApplicationDelegate {
         func application(_ application: UIApplication,
@@ -27,35 +33,94 @@ struct SignUpView: View {
     var body: some View {
         BackgroundView {
             VStack {
+                // App Title
+                Text("Coolvert")
+                    .foregroundColor(Color.color9)
+                    .font(.custom("Roboto-Thin", size: 48))
+                    .padding(.top, 40)
+                
+                HStack {
+                    Image(isCheckedMartini ? "martini2" : "martini")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                       // .cornerRadius(50)
+                       // .background(isCheckedMartini ? Color.color7 : Color.color2)
+                        .onTapGesture {
+                            isCheckedMartini.toggle()
+                            isCheckedMicrophone = false
+                        }
+                    
+                    VStack {
+                        Text("Empresa")
+                            .font(.custom("Roboto-Regular", size: 18))
+                    }
+                    .padding(.trailing, 80)
+                    
+                    
+                    Image(isCheckedMicrophone ? "microphone2" : "microphone")
+                        .resizable()
+                        .frame(width: 50, height: 50)
+                        .onTapGesture {
+                            isCheckedMicrophone.toggle()
+                            isCheckedMartini = false
+                        }
+                    VStack {
+                        Text("Artista")
+                            .font(.custom("Roboto-Regular", size: 18))
+                    }
+                    .padding(.vertical)
+                }
+                .padding()
+                
                 // Nome
-                TextField("Nome", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                TextField("Nome", text: $name)
                     .padding()
-                
+                    .background(Color.color2)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.color9, lineWidth: 0.3))
+                    .padding(.horizontal)
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+
                 // CPF / CNPJ
-                TextField("CPF / CNPJ", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                TextField("CPF / CNPJ", text: $cpfCnpj)
                     .padding()
-                
+                    .background(Color.color2)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.color9, lineWidth: 0.3))
+                    .padding(.horizontal)
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+
                 // Email
                 TextField("Email", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                     .padding()
+                    .background(Color.color2)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.color9, lineWidth: 0.3))
+                    .padding(.horizontal)
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                 
                 // Senha
                 SecureField("Senha", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
                     .padding()
+                    .background(Color.color2)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.color9, lineWidth: 0.3))
+                    .padding(.horizontal)
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                    .autocorrectionDisabled()
                 
                 // Confirmar senhar
-                SecureField("Confirme a Senha", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                SecureField("Confirme a Senha", text: $confirmPassword)
                     .padding()
+                    .background(Color.color2)
+                    .cornerRadius(8)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.color9, lineWidth: 0.3))
+                    .padding(.horizontal)
+                    .autocorrectionDisabled()
+                    .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                
+                
+
                 
                 HStack {
 
@@ -81,18 +146,54 @@ struct SignUpView: View {
     }
     
     func signUp() {
+        // Verifica se todos os campos estão preenchidos
+                guard !name.isEmpty, !cpfCnpj.isEmpty, !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
+                    errorMessage = "Por favor, preencha todos os campos."
+                    return
+                }
         
+        // Verifica se as senhas coincidem
+        guard password == confirmPassword else {
+            errorMessage = "As senhas não coincidem."
+            return
+        }
+        
+        // Cria o usuário no Firebase Authentication
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 errorMessage = error.localizedDescription
             } else {
-                errorMessage = "Usuário cadastrado com sucesso!"
-                email = ""
-                password = ""
+                guard let uid = authResult?.user.uid else { return }
+                saveUserData(uid: uid)
             }
         }
     }
-}
+    
+    func saveUserData(uid: String) {
+            // Prepara os dados do usuário
+            let userData: [String: Any] = [
+                "name": name,
+                "cpfCnpj": cpfCnpj,
+                "email": email
+            ]
+
+            // Salva os dados no Firestore
+            let db = Firestore.firestore()
+            db.collection("users").document(uid).setData(userData) { error in
+                if let error = error {
+                    errorMessage = "Erro ao salvar os dados do usuário: \(error.localizedDescription)"
+                } else {
+                    errorMessage = "Usuário cadastrado com sucesso!"
+                    // Limpa os campos
+                    email = ""
+                    password = ""
+                    confirmPassword = ""
+                    name = ""
+                    cpfCnpj = ""
+                }
+            }
+        }
+    }
 
 #Preview {
     SignUpView()
