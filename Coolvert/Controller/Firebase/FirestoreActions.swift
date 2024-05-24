@@ -3,11 +3,20 @@ import Firebase
 import FirebaseFirestore
 
 class FirestoreActions {
+        
     let firestore = Firestore.firestore()
     
-    func cadastrarUsuario( nome: String ) {
-        let dados: [String : Any] = [ "idade" : 21 , "nome " : "joaotesteteste" ]
-        firestore.collection("usuarios").document("jpreis").setData(dados)
+    func uploadDataUser( uid: String, email: String, name: String, cpfCnpj: String) {
+        
+        let dataUser: [String : Any] = [
+            "email " : email,
+            "name" : name,
+            "cpfCnpj" : cpfCnpj
+        ]
+        
+        firestore.collection("users")
+            .document(uid)
+            .setData(dataUser)
     }
     
 }

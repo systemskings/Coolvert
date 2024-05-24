@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A899A522BFFFBD000B7FD5F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A899A512BFFFBD000B7FD5F /* GoogleService-Info.plist */; };
 		9908CF702BFC0EEE00F4962A /* FirebaseAuthActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9908CF6C2BFC0EEE00F4962A /* FirebaseAuthActions.swift */; };
 		9908CF712BFC0EEE00F4962A /* FirestoreActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9908CF6D2BFC0EEE00F4962A /* FirestoreActions.swift */; };
 		9908CF772BFC0EF600F4962A /* CoolvertApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9908CF732BFC0EF600F4962A /* CoolvertApp.swift */; };
@@ -25,10 +26,10 @@
 		9979D1762BFEB27F00EF1F7F /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 9979D1752BFEB27F00EF1F7F /* FirebaseFirestoreSwift */; };
 		9979D1782BFEB27F00EF1F7F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9979D1772BFEB27F00EF1F7F /* FirebaseStorage */; };
 		9979D17B2BFEB46B00EF1F7F /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9979D17A2BFEB46B00EF1F7F /* BackgroundView.swift */; };
-		99C6302B2BFEAFFD007F4DA2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99C6302A2BFEAFFD007F4DA2 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A899A512BFFFBD000B7FD5F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9908CF6C2BFC0EEE00F4962A /* FirebaseAuthActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthActions.swift; sourceTree = "<group>"; };
 		9908CF6D2BFC0EEE00F4962A /* FirestoreActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreActions.swift; sourceTree = "<group>"; };
 		9908CF732BFC0EF600F4962A /* CoolvertApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoolvertApp.swift; sourceTree = "<group>"; };
@@ -38,7 +39,6 @@
 		992BD5C12BEE8F5A000F44FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		992BD5C42BEE8F5A000F44FD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9979D17A2BFEB46B00EF1F7F /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
-		99C6302A2BFEAFFD007F4DA2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../fail 2/Coolvert/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +92,7 @@
 		992BD5B12BEE8F59000F44FD = {
 			isa = PBXGroup;
 			children = (
-				99C6302A2BFEAFFD007F4DA2 /* GoogleService-Info.plist */,
+				0A899A512BFFFBD000B7FD5F /* GoogleService-Info.plist */,
 				992BD5BC2BEE8F59000F44FD /* Coolvert */,
 				992BD5BB2BEE8F59000F44FD /* Products */,
 			);
@@ -211,8 +211,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				992BD5C52BEE8F5A000F44FD /* Preview Assets.xcassets in Resources */,
-				99C6302B2BFEAFFD007F4DA2 /* GoogleService-Info.plist in Resources */,
 				9908CF862BFC228600F4962A /* Assets.xcassets in Resources */,
+				0A899A522BFFFBD000B7FD5F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
