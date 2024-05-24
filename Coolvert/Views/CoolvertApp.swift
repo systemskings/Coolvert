@@ -23,12 +23,12 @@ struct CoolvertApp: App {
             return true
         }
     }
+
     
     var body: some Scene {
-        
         WindowGroup {
-            NavigationView {
-                    ContentView()
+            NavigationView{
+                ContentView()
             }
         }
     }

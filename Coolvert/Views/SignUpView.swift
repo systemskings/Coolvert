@@ -18,8 +18,8 @@ struct SignUpView: View {
     @State private var errorMessage: String = ""
     @State private var confirmPassword = ""
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @State private var isCheckedMartini: Bool = false
-    @State private var isCheckedMicrophone: Bool = false
+    @State private var isCheckedEmpresa: Bool = false
+    @State private var isCheckedArtista: Bool = false
     
     class AppDelegate: NSObject, UIApplicationDelegate {
         func application(_ application: UIApplication,
@@ -39,15 +39,16 @@ struct SignUpView: View {
                     .font(.custom("Roboto-Thin", size: 48))
                     .padding(.top, 40)
                 
+                // Escolha do tipo de usuario
                 HStack {
-                    Image(isCheckedMartini ? "martini2" : "martini")
+                    Image(isCheckedEmpresa ? "martini2" : "martini")
                         .resizable()
                         .frame(width: 50, height: 50)
                        // .cornerRadius(50)
                        // .background(isCheckedMartini ? Color.color7 : Color.color2)
                         .onTapGesture {
-                            isCheckedMartini.toggle()
-                            isCheckedMicrophone = false
+                            isCheckedEmpresa.toggle()
+                            isCheckedArtista = false
                         }
                     
                     VStack {
@@ -57,12 +58,12 @@ struct SignUpView: View {
                     .padding(.trailing, 80)
                     
                     
-                    Image(isCheckedMicrophone ? "microphone2" : "microphone")
+                    Image(isCheckedArtista ? "microphone2" : "microphone")
                         .resizable()
                         .frame(width: 50, height: 50)
                         .onTapGesture {
-                            isCheckedMicrophone.toggle()
-                            isCheckedMartini = false
+                            isCheckedArtista.toggle()
+                            isCheckedEmpresa = false
                         }
                     VStack {
                         Text("Artista")
@@ -118,10 +119,7 @@ struct SignUpView: View {
                     .padding(.horizontal)
                     .autocorrectionDisabled()
                     .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
-                
-                
-
-                
+                      
                 HStack {
 
                                 Button(action: {
@@ -147,10 +145,10 @@ struct SignUpView: View {
     
     func signUp() {
         // Verifica se todos os campos estão preenchidos
-                guard !name.isEmpty, !cpfCnpj.isEmpty, !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
-                    errorMessage = "Por favor, preencha todos os campos."
-                    return
-                }
+        guard !name.isEmpty, !cpfCnpj.isEmpty, !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
+            errorMessage = "Por favor, preencha todos os campos."
+            return
+        }
         
         // Verifica se as senhas coincidem
         guard password == confirmPassword else {
@@ -158,24 +156,33 @@ struct SignUpView: View {
             return
         }
         
+        guard isCheckedArtista == true && isCheckedEmpresa == false || isCheckedArtista == false && isCheckedEmpresa == true else {
+            errorMessage = "Você é uma Empresa ou um Artista ?"
+            return
+        }
+        
+        let userType = isCheckedEmpresa ? "Empresa" : "Artista"
+        
         // Cria o usuário no Firebase Authentication
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 errorMessage = error.localizedDescription
             } else {
                 guard let uid = authResult?.user.uid else { return }
-                saveUserData(uid: uid)
+                saveUserData(uid: uid, userType: userType)
             }
         }
     }
     
-    func saveUserData(uid: String) {
+    func saveUserData(uid: String, userType: String) {
             // Prepara os dados do usuário
             let userData: [String: Any] = [
                 "name": name,
                 "cpfCnpj": cpfCnpj,
-                "email": email
+                "email": email,
+                "userType": userType
             ]
+        
 
             // Salva os dados no Firestore
             let db = Firestore.firestore()
@@ -190,6 +197,8 @@ struct SignUpView: View {
                     confirmPassword = ""
                     name = ""
                     cpfCnpj = ""
+                    isCheckedEmpresa = false
+                    isCheckedArtista = false
                 }
             }
         }

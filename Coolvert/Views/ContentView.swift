@@ -7,6 +7,50 @@
 
 import SwiftUI
 import Firebase
+import FirebaseCore
+import GoogleSignIn
+
+
+//@UIApplicationMain
+//class AppDelegate: UIResponder, UIApplicationDelegate {
+//
+//    var window: UIWindow?
+//
+//    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+//        FirebaseApp.configure()
+//        
+//        GIDSignIn.sharedInstance.clientID = FirebaseApp.app()?.options.clientID
+//        GIDSignIn.sharedInstance.delegate = self
+//
+//        
+//        return true
+//    }
+//
+//    @available(iOS 9.0, *)
+//    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+//        return GIDSignIn.sharedInstance.handle(url)
+//    }
+//}
+//
+//extension AppDelegate: GIDSignInDelegate {
+//    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+//        if let error = error {
+//            print("Error signing in: \(error.localizedDescription)")
+//            return
+//        }
+//
+//        guard let authentication = user.authentication else { return }
+//        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+//
+//        Auth.auth().signIn(with: credential) { (authResult, error) in
+//            if let error = error {
+//                print("Firebase sign-in error: \(error.localizedDescription)")
+//            } else {
+//                print("User is signed in with Google")
+//            }
+//        }
+//    }
+//}
 
 struct ContentView: View {
     @State private var email: String = ""
@@ -66,9 +110,10 @@ struct ContentView: View {
                 
                 // Login with Gmail Button
                 Button(action: {
-                    // Add Google Sign-In logic here
+                   // signInWithGoogle()
                 }) {
                     HStack {
+                        
                         Image(systemName: "globe") // Placeholder for Google logo
                             .foregroundColor(Color.color9)
                         Text("Entre com Gmail")
@@ -80,7 +125,7 @@ struct ContentView: View {
                     .cornerRadius(50)
                 }
                 .padding(.horizontal)
-
+                
                 
                 // Error Message
                 Text(errorMessage)
@@ -101,8 +146,8 @@ struct ContentView: View {
                     Spacer()
                     
                     NavigationLink(destination: SignUpView()) {
-                            Text("Cadastre-se")
-                                .foregroundColor(Color.color9)
+                        Text("Cadastre-se")
+                            .foregroundColor(Color.color9)
                     }
                 }
                 .padding(.horizontal)
@@ -122,7 +167,44 @@ struct ContentView: View {
             }
         }
     }
+    
+    
+//    func signInWithGoogle() {
+//        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+//        
+//        let signInConfig = GIDConfiguration(clientID: clientID)
+//        
+//        GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: getRootViewController()) { user, error in
+//            if let error = error {
+//                errorMessage = error.localizedDescription
+//                return
+//            }
+//            
+//            guard let authentication = user?.authentication, let idToken = authentication.idToken else { return }
+//            
+//            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: authentication.accessToken)
+//            
+//            Auth.auth().signIn(with: credential) { authResult, error in
+//                if let error = error {
+//                    errorMessage = error.localizedDescription
+//                } else {
+//                    errorMessage = "User signed in with Google!"
+//                }
+//            }
+//        }
+//    }
+//    
+//    func getRootViewController() -> UIViewController {
+//        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+//            return UIViewController()
+//        }
+//        guard let rootViewController = screen.windows.first?.rootViewController else {
+//            return UIViewController()
+//        }
+//        return rootViewController
+//    }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
