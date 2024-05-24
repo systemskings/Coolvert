@@ -11,6 +11,7 @@ class FirebaseAuthActions {
             if let authResult = authResult {
                 completion(.success(authResult.user))
             } else if let error = error {
+                // teste commit
                 completion(.failure(error))
             }
         }
