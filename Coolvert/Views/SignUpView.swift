@@ -150,6 +150,23 @@ struct SignUpView: View {
             return
         }
         
+        // Validar CNPJ e CPF
+//        let semaphore = DispatchSemaphore(value: 0)
+        InvertextoAPI.validate(cpfCnpj: cpfCnpj) { result in
+            switch result {
+            case .success(let result):
+                if(result.0 == false) {
+                    errorMessage = "CPF/CNPJ inválido."
+                    return
+                }
+            case .failure(let error):
+                errorMessage = "Erro API: \(error.localizedDescription)"
+                return
+            }
+//            semaphore.signal()
+        }
+//        _ = semaphore.wait(timeout: .distantFuture)
+        
         // Verifica se as senhas coincidem
         guard password == confirmPassword else {
             errorMessage = "As senhas não coincidem."

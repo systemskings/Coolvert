@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A899A5F2C01532100B7FD5F /* FirestoreKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A899A5E2C01532100B7FD5F /* FirestoreKeys.swift */; };
+		0A899A622C0154BD00B7FD5F /* InvertextoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A899A612C0154BD00B7FD5F /* InvertextoAPI.swift */; };
 		9908CF702BFC0EEE00F4962A /* FirebaseAuthActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9908CF6C2BFC0EEE00F4962A /* FirebaseAuthActions.swift */; };
 		9908CF712BFC0EEE00F4962A /* FirestoreActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9908CF6D2BFC0EEE00F4962A /* FirestoreActions.swift */; };
 		9908CF772BFC0EF600F4962A /* CoolvertApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9908CF732BFC0EF600F4962A /* CoolvertApp.swift */; };
@@ -43,6 +45,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A899A5E2C01532100B7FD5F /* FirestoreKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreKeys.swift; sourceTree = "<group>"; };
+		0A899A612C0154BD00B7FD5F /* InvertextoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvertextoAPI.swift; sourceTree = "<group>"; };
 		9908CF6C2BFC0EEE00F4962A /* FirebaseAuthActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseAuthActions.swift; sourceTree = "<group>"; };
 		9908CF6D2BFC0EEE00F4962A /* FirestoreActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirestoreActions.swift; sourceTree = "<group>"; };
 		9908CF732BFC0EF600F4962A /* CoolvertApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoolvertApp.swift; sourceTree = "<group>"; };
@@ -90,6 +94,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A899A5C2C01527200B7FD5F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0A899A602C01549D00B7FD5F /* Validator */,
+				0A899A5D2C01527F00B7FD5F /* Enum */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		0A899A5D2C01527F00B7FD5F /* Enum */ = {
+			isa = PBXGroup;
+			children = (
+				0A899A5E2C01532100B7FD5F /* FirestoreKeys.swift */,
+			);
+			path = Enum;
+			sourceTree = "<group>";
+		};
+		0A899A602C01549D00B7FD5F /* Validator */ = {
+			isa = PBXGroup;
+			children = (
+				0A899A612C0154BD00B7FD5F /* InvertextoAPI.swift */,
+			);
+			path = Validator;
+			sourceTree = "<group>";
+		};
 		9908CF6E2BFC0EEE00F4962A /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +167,7 @@
 		992BD5BC2BEE8F59000F44FD /* Coolvert */ = {
 			isa = PBXGroup;
 			children = (
+				0A899A5C2C01527200B7FD5F /* Utils */,
 				9979D1792BFEB3A800EF1F7F /* Style */,
 				9908CF752BFC0EF600F4962A /* Views */,
 				9908CF6F2BFC0EEE00F4962A /* Controller */,
@@ -291,8 +321,10 @@
 				9908CF7C2BFC131A00F4962A /* ContentView.swift in Sources */,
 				9979D17B2BFEB46B00EF1F7F /* BackgroundView.swift in Sources */,
 				99A0872C2C00B6E500C79CB6 /* AppDelegate.swift in Sources */,
+				0A899A5F2C01532100B7FD5F /* FirestoreKeys.swift in Sources */,
 				9908CF712BFC0EEE00F4962A /* FirestoreActions.swift in Sources */,
 				9908CF772BFC0EF600F4962A /* CoolvertApp.swift in Sources */,
+				0A899A622C0154BD00B7FD5F /* InvertextoAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
