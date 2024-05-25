@@ -56,6 +56,7 @@ struct ContentView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var errorMessage: String = ""
+    private let firebaseAuth = FirebaseAuthActions()
     
     var body: some View {
         BackgroundView {
@@ -158,14 +159,23 @@ struct ContentView: View {
     }
     
     func signIn() {
-        Auth.auth().signIn(withEmail: email.lowercased(), password: password) { authResult, error in
-            if let error = error {
-                errorMessage = error.localizedDescription
-            } else {
+        firebaseAuth.signIn(withEmail: email.lowercased(), password: password) { result in
+            switch result {
+            case .success(()): 
                 errorMessage = "Login bem-sucedido!"
-                // Aqui você pode redirecionar para a próxima tela ou realizar outras ações após o login bem-sucedido
+            case .failure(let error): 
+                errorMessage = error.localizedDescription
             }
         }
+        
+//        Auth.auth().signIn(withEmail: email.lowercased(), password: password) { authResult, error in
+//            if let error = error {
+//                errorMessage = error.localizedDescription
+//            } else {
+//                errorMessage = "Login bem-sucedido!"
+//                // Aqui você pode redirecionar para a próxima tela ou realizar outras ações após o login bem-sucedido
+//            }
+//        }
     }
     
     

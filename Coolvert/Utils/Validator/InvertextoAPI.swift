@@ -4,14 +4,6 @@ class InvertextoAPI {
 
     static func validate(cpfCnpj value: String, completion: @escaping (Result<(Bool, String), Error>) -> Void) {
         
-        let group = DispatchGroup()
-        
-        group.enter()
-        
-        DispatchQueue.global().async {
-            
-        }
-        
         let token = "7891|dHDPmBb8sK0WInRmseo0pMa9PxxbmSpk"
         let host = "https://api.invertexto.com/v1/validator?token="
         

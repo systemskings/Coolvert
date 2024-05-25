@@ -6,10 +6,10 @@ class FirebaseAuthActions {
         
     private let firebaseAuth = Auth.auth()
     
-    func signIn(withEmail email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
+    func signIn(withEmail email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         firebaseAuth.signIn(withEmail: email, password: password) { authResult, error in
             if let authResult = authResult {
-                completion(.success(authResult.user))
+                completion(.success(()))
             } else if let error = error {
                 completion(.failure(error))
             }
