@@ -21,6 +21,9 @@ struct SignUpView: View {
     @State private var isCheckedEmpresa: Bool = false
     @State private var isCheckedArtista: Bool = false
     
+    private let firebaseAuth = FirebaseAuthActions()
+    private let firestore = FirestoreActions()
+    
     class AppDelegate: NSObject, UIApplicationDelegate {
         func application(_ application: UIApplication,
                          didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -143,29 +146,35 @@ struct SignUpView: View {
         }
     }
     
+//    let group = DispatchGroup()
+    func validate(completion: @escaping (Bool) -> Void) {
+//        group.enter()
+//        DispatchQueue.global().async {
+            InvertextoAPI.validate(cpfCnpj: cpfCnpj) { result in
+                switch result {
+                case .success(let result):
+                    if(result.0 == false) {
+                        errorMessage = "CPF/CNPJ inválido."
+                        completion(false)
+                    } else {
+                        completion(true)
+                    }
+                case .failure(let error):
+                    errorMessage = "Erro API: \(error.localizedDescription)"
+                    completion(false)
+                }
+//                group.leave()
+            }
+//        }
+    }
+    
     func signUp() {
+
         // Verifica se todos os campos estão preenchidos
         guard !name.isEmpty, !cpfCnpj.isEmpty, !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
             errorMessage = "Por favor, preencha todos os campos."
             return
         }
-        
-        // Validar CNPJ e CPF
-//        let semaphore = DispatchSemaphore(value: 0)
-        InvertextoAPI.validate(cpfCnpj: cpfCnpj) { result in
-            switch result {
-            case .success(let result):
-                if(result.0 == false) {
-                    errorMessage = "CPF/CNPJ inválido."
-                    return
-                }
-            case .failure(let error):
-                errorMessage = "Erro API: \(error.localizedDescription)"
-                return
-            }
-//            semaphore.signal()
-        }
-//        _ = semaphore.wait(timeout: .distantFuture)
         
         // Verifica se as senhas coincidem
         guard password == confirmPassword else {
@@ -173,51 +182,85 @@ struct SignUpView: View {
             return
         }
         
+        // Verifica tipo de usuário selecionado
         guard isCheckedArtista == true && isCheckedEmpresa == false || isCheckedArtista == false && isCheckedEmpresa == true else {
             errorMessage = "Você é uma Empresa ou um Artista ?"
             return
         }
         
-        let userType = isCheckedEmpresa ? "Empresa" : "Artista"
+        let userType = isCheckedEmpresa ? 0 : 1
+        
+        // Validar CNPJ e CPF
+//        validate { result in
+//            group.wait()
+//            if !result {
+//                return
+//            }
+//        }
         
         // Cria o usuário no Firebase Authentication
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            if let error = error {
+        firebaseAuth.signUp(withEmail: email, password: password) { result in
+            switch result {
+            case .success(let user):
+                saveUserData(uid: user.uid, userType: userType)
+            case .failure(let error):
                 errorMessage = error.localizedDescription
-            } else {
-                guard let uid = authResult?.user.uid else { return }
-                saveUserData(uid: uid, userType: userType)
             }
         }
+        
+//        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+//            if let error = error {
+//                errorMessage = error.localizedDescription
+//            } else {
+//                guard let uid = authResult?.user.uid else { return }
+//                saveUserData(uid: uid, userType: userType)
+//            }
+//        }
     }
     
-    func saveUserData(uid: String, userType: String) {
-            // Prepara os dados do usuário
-            let userData: [String: Any] = [
-                "name": name,
-                "cpfCnpj": cpfCnpj,
-                "email": email,
-                "userType": userType
-            ]
+    func saveUserData(uid: String, userType: Int) {
         
-
-            // Salva os dados no Firestore
-            let db = Firestore.firestore()
-            db.collection("users").document(uid).setData(userData) { error in
-                if let error = error {
-                    errorMessage = "Erro ao salvar os dados do usuário: \(error.localizedDescription)"
-                } else {
-                    errorMessage = "Usuário cadastrado com sucesso!"
-                    // Limpa os campos
-                    email = ""
-                    password = ""
-                    confirmPassword = ""
-                    name = ""
-                    cpfCnpj = ""
-                    isCheckedEmpresa = false
-                    isCheckedArtista = false
-                }
+        firestore.uploadDataUser(uid: uid, email: email, name: name, cpfCnpj: cpfCnpj, userType: userType) { result in
+            switch result {
+            case .success(()):
+                errorMessage = "Usuário cadastrado com sucesso!"
+                // Limpa os campos
+                email = ""
+                password = ""
+                confirmPassword = ""
+                name = ""
+                cpfCnpj = ""
+                isCheckedEmpresa = false
+                isCheckedArtista = false
+            case .failure(let error):
+                errorMessage = "Erro ao salvar os dados do usuário: \(error.localizedDescription)"
             }
+        }
+        
+            // Prepara os dados do usuário
+//            let userData: [String: Any] = [
+//                "name": name,
+//                "cpfCnpj": cpfCnpj,
+//                "email": email,
+//                "userType": userType
+//            ]
+            // Salva os dados no Firestore
+//            let db = Firestore.firestore()
+//            db.collection("users").document(uid).setData(userData) { error in
+//                if let error = error {
+//                    errorMessage = "Erro ao salvar os dados do usuário: \(error.localizedDescription)"
+//                } else {
+//                    errorMessage = "Usuário cadastrado com sucesso!"
+//                    // Limpa os campos
+//                    email = ""
+//                    password = ""
+//                    confirmPassword = ""
+//                    name = ""
+//                    cpfCnpj = ""
+//                    isCheckedEmpresa = false
+//                    isCheckedArtista = false
+//                }
+//            }
         }
     }
 
