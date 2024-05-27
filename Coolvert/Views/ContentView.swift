@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var errorMessage: String = ""
     private let firebaseAuth = FirebaseAuthActions()
     @State private var isSignedIn = false
+   // @IBOutlet weak var signInButton: GIDSignInButton!
     
     
     var body: some View {
