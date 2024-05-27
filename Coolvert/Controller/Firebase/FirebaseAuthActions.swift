@@ -8,7 +8,7 @@ class FirebaseAuthActions {
     
     func signIn(withEmail email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         firebaseAuth.signIn(withEmail: email, password: password) { authResult, error in
-            if let authResult = authResult {
+            if authResult != nil {
                 completion(.success(()))
             } else if let error = error {
                 completion(.failure(error))

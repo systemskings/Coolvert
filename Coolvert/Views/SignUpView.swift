@@ -208,14 +208,14 @@ struct SignUpView: View {
             }
         }
         
-//        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-//            if let error = error {
-//                errorMessage = error.localizedDescription
-//            } else {
-//                guard let uid = authResult?.user.uid else { return }
-//                saveUserData(uid: uid, userType: userType)
-//            }
-//        }
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                errorMessage = error.localizedDescription
+            } else {
+                guard let uid = authResult?.user.uid else { return }
+                saveUserData(uid: uid, userType: userType)
+            }
+        }
     }
     
     func saveUserData(uid: String, userType: Int) {
