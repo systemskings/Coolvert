@@ -5,98 +5,79 @@
 //  Created by Alysson Reis on 10/05/2024.
 //
 
+
 import SwiftUI
-import Firebase
-import FirebaseCore
 import GoogleSignIn
+import GoogleSignInSwift
 
 struct ContentView: View {
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var errorMessage: String = ""
-    private let firebaseAuth = FirebaseAuthActions()
-    @State private var isSignedIn = false
-   // @IBOutlet weak var signInButton: GIDSignInButton!
-    
+    @StateObject private var viewModel = AuthenticationViewModel()
     
     var body: some View {
         BackgroundView {
             VStack {
                 Spacer()
                 
-                // App Title
                 Text("Coolvert")
                     .foregroundColor(Color.color9)
                     .font(.custom("Roboto-Thin", size: 48))
                     .padding(.bottom, 20)
                 
-                // Logo
                 Image("Logo1")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 260, height: 260)
                     .padding(.bottom, 10)
                 
-                
+
                 // Email TextField
-                TextField("Digite seu E-mail", text: $email)
-                    .padding()
-                    .background(Color.color2)
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.color9, lineWidth: 0.3))
-                    .padding(.horizontal)
-                    .disableAutocorrection(true)
-                    .autocapitalization(.none)
-                
+                FloatingPlaceholderTextField(text: $viewModel.email, placeholder: "Email")
+                                
                 // Password SecureField
-                SecureField("Digite sua senha", text: $password)
-                    .padding()
-                    .background(Color.color2)
-                    .cornerRadius(8)
-                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.color9, lineWidth: 0.3))
-                    .padding(.horizontal)
+                FloatingPlaceholderTextField(text: $viewModel.password, placeholder: "Senha")
+                                
                 
                 // Login Button
+                                Button(action: {
+                                    viewModel.signIn()
+                                }) {
+                                    Text("Entrar")
+                                        .frame(maxWidth: 260)
+                                        .padding()
+                                        .background(Color.color2)
+                                        .foregroundColor(Color.color9)
+                                        .cornerRadius(50)
+                                }
+                                .padding(.horizontal)
+                                .padding(.top, 40)
+                
+                // Login with Google Button
                 Button(action: {
-                    signIn()
-                }) {
-                    Text("Entrar")
+                    viewModel.signInWithGoogle()
+                    viewModel.showAdditionalInfoView = true
+                }){
+                    HStack {
+                            Image("google") // Substitua "google" pelo nome da sua imagem
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                            Text("Entrar com Google")
+                        }
                         .frame(maxWidth: 260)
-                        .padding()
+                        .padding(.vertical, 10)
+                        .padding(.horizontal)
                         .background(Color.color2)
                         .foregroundColor(Color.color9)
                         .cornerRadius(50)
-                }
-                .padding(.horizontal)
-                .padding(.top, 40)
-                
-                // Login with Gmail Button
-                Button(action: {
-                    signInWithGoogle()
-                }) {
-                    HStack {
-                        
-                        Image(systemName: "globe") // Placeholder for Google logo
-                            .foregroundColor(Color.color9)
-                        Text("Entre com Gmail")
-                            .foregroundColor(Color.color9)
                     }
-                    .frame(maxWidth: 260)
-                    .padding()
-                    .background(Color.color2)
-                    .cornerRadius(50)
-                }
-                .padding(.horizontal)
+                    .padding(.horizontal)
+
                 
-                
-                // Error Message
-                Text(errorMessage)
+                Text(viewModel.errorMessage)
                     .foregroundColor(.red)
                     .padding()
                 
                 Spacer()
                 
-                // Bottom Links
                 HStack {
                     Button(action: {
                         // Add forgot password logic here
@@ -117,56 +98,35 @@ struct ContentView: View {
             }
             .padding()
         }
-    }
-    
-    
-  
-    
-    func signInWithGoogle() {
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         
-
-        _ = GIDConfiguration(clientID: clientID)
-        GIDSignIn.sharedInstance.signIn(withPresenting: getRootViewController()) { authentication, error in
-                if let error = error {
-                    print("There is an error signing the user in ==> \(error)")
-                    return
+        VStack {
+            if viewModel.isSignedIn {
+                if viewModel.showAdditionalInfoView {
+                    if let user = viewModel.user {
+                        AdditionalInfoView(user: user)
+                    }
+                } else {
+                    Text("Usuário logado!")
                 }
-
-            guard let user = authentication?.user, let idToken = user.idToken?.tokenString else { return }
-                    let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
-
-            Auth.auth().signIn(with: credential) { authResult, error in
-                if let error = error {
-                    print("Erro ao autenticar com Firebase: \(error.localizedDescription)")
-                    return
+            } else {
+                Button(action: {
+                    viewModel.signInWithGoogle()
+                    viewModel.showAdditionalInfoView = true
+                }){
+                    Text("Entrar com Google")
+                        .frame(maxWidth: 260)
+                        .padding()
+                        .background(Color.color2)
+                        .foregroundColor(Color.color9)
+                        .cornerRadius(50)
                 }
-                isSignedIn = true
-                print("Usuário autenticado com sucesso!")
+                .padding(.horizontal)
+                    
             }
         }
-    }
-
-    func getRootViewController() -> UIViewController {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let rootViewController = windowScene.windows.first?.rootViewController else {
-            return UIViewController()
-        }
-        return rootViewController
+        .padding()
     }
     
-    func signIn() {
-        firebaseAuth.signIn(withEmail: email.lowercased(), password: password) { result in
-            switch result {
-            case .success(()):
-                errorMessage = "Login bem-sucedido!"
-            case .failure(let error):
-                errorMessage = error.localizedDescription
-            }
-        }
-    }
-    
-
 }
 
 

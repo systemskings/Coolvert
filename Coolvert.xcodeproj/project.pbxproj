@@ -42,7 +42,11 @@
 		99A087472C0132D800C79CB6 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99A087382C0132D800C79CB6 /* Roboto-Regular.ttf */; };
 		99A087482C0132D800C79CB6 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99A087392C0132D800C79CB6 /* Roboto-Thin.ttf */; };
 		99A087492C0132D800C79CB6 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 99A0873A2C0132D800C79CB6 /* Roboto-ThinItalic.ttf */; };
-		99A0874B2C02910400C79CB6 /* TestGoogleSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0874A2C02910400C79CB6 /* TestGoogleSignIn.swift */; };
+		99A625202C076B78008263E1 /* AdditionalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A6251F2C076B78008263E1 /* AdditionalInfoView.swift */; };
+		99A625232C0E86EF008263E1 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A625222C0E86EF008263E1 /* AuthenticationViewModel.swift */; };
+		99A625252C0E8C53008263E1 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A625242C0E8C53008263E1 /* SignUpViewModel.swift */; };
+		99A625272C0E8EE5008263E1 /* AdditionalInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A625262C0E8EE5008263E1 /* AdditionalInfoViewModel.swift */; };
+		99A625292C0FC046008263E1 /* FloatingPlaceholderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A625282C0FC046008263E1 /* FloatingPlaceholderTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,7 +76,11 @@
 		99A087382C0132D800C79CB6 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		99A087392C0132D800C79CB6 /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		99A0873A2C0132D800C79CB6 /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
-		99A0874A2C02910400C79CB6 /* TestGoogleSignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGoogleSignIn.swift; sourceTree = "<group>"; };
+		99A6251F2C076B78008263E1 /* AdditionalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalInfoView.swift; sourceTree = "<group>"; };
+		99A625222C0E86EF008263E1 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		99A625242C0E8C53008263E1 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		99A625262C0E8EE5008263E1 /* AdditionalInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalInfoViewModel.swift; sourceTree = "<group>"; };
+		99A625282C0FC046008263E1 /* FloatingPlaceholderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPlaceholderTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +135,6 @@
 				9908CF6C2BFC0EEE00F4962A /* FirebaseAuthActions.swift */,
 				9908CF6D2BFC0EEE00F4962A /* FirestoreActions.swift */,
 				99A0872B2C00B6E500C79CB6 /* AppDelegate.swift */,
-				99A0874A2C02910400C79CB6 /* TestGoogleSignIn.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -146,6 +153,7 @@
 				9908CF7B2BFC131A00F4962A /* ContentView.swift */,
 				9908CF732BFC0EF600F4962A /* CoolvertApp.swift */,
 				9908CF792BFC112100F4962A /* SignUpView.swift */,
+				99A6251F2C076B78008263E1 /* AdditionalInfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,6 +178,7 @@
 		992BD5BC2BEE8F59000F44FD /* Coolvert */ = {
 			isa = PBXGroup;
 			children = (
+				99A625212C0E86C9008263E1 /* Models */,
 				0A899A5C2C01527200B7FD5F /* Utils */,
 				9979D1792BFEB3A800EF1F7F /* Style */,
 				9908CF752BFC0EF600F4962A /* Views */,
@@ -215,6 +224,17 @@
 				99A0873A2C0132D800C79CB6 /* Roboto-ThinItalic.ttf */,
 			);
 			path = Roboto;
+			sourceTree = "<group>";
+		};
+		99A625212C0E86C9008263E1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				99A625222C0E86EF008263E1 /* AuthenticationViewModel.swift */,
+				99A625242C0E8C53008263E1 /* SignUpViewModel.swift */,
+				99A625262C0E8EE5008263E1 /* AdditionalInfoViewModel.swift */,
+				99A625282C0FC046008263E1 /* FloatingPlaceholderTextField.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,16 +339,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99A625232C0E86EF008263E1 /* AuthenticationViewModel.swift in Sources */,
+				99A625292C0FC046008263E1 /* FloatingPlaceholderTextField.swift in Sources */,
+				99A625272C0E8EE5008263E1 /* AdditionalInfoViewModel.swift in Sources */,
 				9908CF702BFC0EEE00F4962A /* FirebaseAuthActions.swift in Sources */,
 				9908CF7A2BFC112100F4962A /* SignUpView.swift in Sources */,
-				99A0874B2C02910400C79CB6 /* TestGoogleSignIn.swift in Sources */,
 				9908CF7C2BFC131A00F4962A /* ContentView.swift in Sources */,
+				99A625252C0E8C53008263E1 /* SignUpViewModel.swift in Sources */,
 				9979D17B2BFEB46B00EF1F7F /* BackgroundView.swift in Sources */,
 				99A0872C2C00B6E500C79CB6 /* AppDelegate.swift in Sources */,
 				0A899A5F2C01532100B7FD5F /* FirestoreKeys.swift in Sources */,
 				9908CF712BFC0EEE00F4962A /* FirestoreActions.swift in Sources */,
 				9908CF772BFC0EF600F4962A /* CoolvertApp.swift in Sources */,
 				0A899A622C0154BD00B7FD5F /* InvertextoAPI.swift in Sources */,
+				99A625202C076B78008263E1 /* AdditionalInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
