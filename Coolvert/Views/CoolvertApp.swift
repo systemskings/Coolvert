@@ -14,11 +14,13 @@ import GoogleSignIn
 @main
 struct CoolvertApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
+    @StateObject private var viewModel = AuthenticationViewModel()
+
     var body: some Scene {
         WindowGroup {
-            NavigationView{
+            NavigationView {
                 ContentView()
+                    .environmentObject(viewModel)
             }
         }
     }

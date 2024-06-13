@@ -16,23 +16,43 @@ class AuthenticationViewModel: ObservableObject {
     @Published var errorMessage: String = ""
     @Published var isSignedIn: Bool = false
     @Published var showAdditionalInfoView: Bool = false
-    @Published var user: User?
+    @Published var userProfile: UserProfile? = nil
+    @Published var isLoading: Bool = false
+    
+    init() {
+        checkUserStatus()
+    }
+    
+    func checkUserStatus() {
+        if let currentUser = Auth.auth().currentUser {
+            fetchUserProfile(uid: currentUser.uid)
+        } else {
+            self.isSignedIn = false
+        }
+    }
+    
     
     private let firebaseAuth = FirebaseAuthActions()
     private let firestoreActions = FirestoreActions()
     
+    
     func signIn() {
-        firebaseAuth.signIn(withEmail: email.lowercased(), password: password) { result in
+        isLoading = true
+        firebaseAuth.signIn(withEmail: email.lowercased(), password: password) { [self] result in
+            self.isLoading = false
             switch result {
-            case .success:
-                self.errorMessage = "Login bem-sucedido!"
+            case .success(let user):
+                self.fetchUserProfile(uid: user.uid)
                 self.isSignedIn = true
-                self.user = self.firebaseAuth.getUser()
+                self.errorMessage = "Login bem-sucedido!"
             case .failure(let error):
-                self.errorMessage = error.localizedDescription
+                
+                errorMessage = error.localizedDescription
             }
         }
     }
+    
+    
     
     func signInWithGoogle() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -43,11 +63,13 @@ class AuthenticationViewModel: ObservableObject {
                 print("There is an error signing the user in ==> \(error)")
                 return
             }
-
+            
             guard let user = authentication?.user, let idToken = user.idToken?.tokenString else { return }
             let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
-
+            
+            self.isLoading = true
             Auth.auth().signIn(with: credential) { authResult, error in
+                self.isLoading = false
                 if let error = error {
                     print("Erro ao autenticar com Firebase: \(error.localizedDescription)")
                     return
@@ -56,21 +78,24 @@ class AuthenticationViewModel: ObservableObject {
                 print("Usuário autenticado com sucesso!")
                 
                 if let user = Auth.auth().currentUser {
-                    self.user = user
-                    self.saveUserData(uid: user.uid, name: user.displayName ?? "No Name", email: user.email ?? "No Email")
+                    self.saveUserData(uid: user.uid, name: user.displayName ?? "No Name", email: user.email ?? "No Email", userType: nil)
                     self.showAdditionalInfoView = true
                 }
             }
         }
     }
     
-    func saveUserData(uid: String, name: String, email: String) {
+    func saveUserData(uid: String, name: String, email: String, userType: Int?) {
         let db = Firestore.firestore()
-        let userData: [String: Any] = [
+        var userData: [String: Any] = [
             "name": name,
-            "email": email,
+            "email": email
         ]
-
+        
+        if let userType = userType {
+            userData["userType"] = userType
+        }
+        
         db.collection("users").document(uid).setData(userData) { error in
             if let error = error {
                 print("Erro ao salvar os dados do usuário: \(error.localizedDescription)")
@@ -80,11 +105,53 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
     
+    func fetchUserProfile(uid: String) {
+        let db = Firestore.firestore()
+        db.collection("users").document(uid).getDocument { document, error in
+            if let document = document, document.exists {
+                let data = document.data() ?? [:]
+                self.userProfile = UserProfile(uid: uid, data: data)
+                self.isSignedIn = true
+            } else {
+                print("Documento do usuário não encontrado: \(error?.localizedDescription ?? "Erro desconhecido")")
+            }
+        }
+    }
+    
+    func sendPasswordReset() {
+        guard !email.isEmpty else {
+            errorMessage = "Por favor, insira seu e-mail."
+            return
+        }
+        
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                self.errorMessage = "Erro ao enviar e-mail de redefinição de senha: \(error.localizedDescription)"
+            } else {
+                self.errorMessage = "E-mail de redefinição de senha enviado com sucesso!"
+            }
+        }
+    }
+    
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+            self.isSignedIn = false
+            self.userProfile = nil
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+            self.errorMessage = "Erro ao sair: \(signOutError.localizedDescription)"
+        }
+    }
+    
     private func getRootViewController() -> UIViewController {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let rootViewController = windowScene.windows.first?.rootViewController else {
+        guard let screen = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
             return UIViewController()
         }
-        return rootViewController
+        guard let root = screen.windows.first?.rootViewController else {
+            return UIViewController()
+        }
+        return root
     }
+    
 }

@@ -9,9 +9,10 @@ import SwiftUI
 import FirebaseAuth
 
 struct AdditionalInfoView: View {
-    @StateObject private var viewModel = AdditionalInfoViewModel()
-    let user: User
-
+    @EnvironmentObject var viewModel: AdditionalInfoViewModel
+    
+    let user: UserProfile
+    
     var body: some View {
         VStack {
             HStack {
@@ -62,7 +63,7 @@ struct AdditionalInfoView: View {
                         .cornerRadius(8)
                 }
                 .padding()
-
+                
                 Text(viewModel.errorMessage)
                     .foregroundColor(.red)
                     .padding()

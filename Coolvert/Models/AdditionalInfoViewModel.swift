@@ -15,7 +15,8 @@ class AdditionalInfoViewModel: ObservableObject {
     @Published var isCheckedEmpresa: Bool = false
     @Published var isCheckedArtista: Bool = false
     
-    func saveAdditionalUserData(user: User) {
+    
+    func saveAdditionalUserData(user: UserProfile) {
         guard !cpfCnpj.isEmpty else {
             errorMessage = "Por favor, preencha todos os campos."
             return

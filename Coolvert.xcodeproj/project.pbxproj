@@ -47,6 +47,11 @@
 		99A625252C0E8C53008263E1 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A625242C0E8C53008263E1 /* SignUpViewModel.swift */; };
 		99A625272C0E8EE5008263E1 /* AdditionalInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A625262C0E8EE5008263E1 /* AdditionalInfoViewModel.swift */; };
 		99A625292C0FC046008263E1 /* FloatingPlaceholderTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A625282C0FC046008263E1 /* FloatingPlaceholderTextField.swift */; };
+		99D419812C17C78A00D2F1F1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D419802C17C78A00D2F1F1 /* HomeView.swift */; };
+		99D419832C17CD0300D2F1F1 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D419822C17CD0300D2F1F1 /* UserProfile.swift */; };
+		99D419852C1904DF00D2F1F1 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D419842C1904DF00D2F1F1 /* LoadingView.swift */; };
+		99D419872C191C0C00D2F1F1 /* CustomErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D419862C191C0C00D2F1F1 /* CustomErrors.swift */; };
+		99D419892C19234D00D2F1F1 /* PasswordResetPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D419882C19234D00D2F1F1 /* PasswordResetPopup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +86,11 @@
 		99A625242C0E8C53008263E1 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		99A625262C0E8EE5008263E1 /* AdditionalInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalInfoViewModel.swift; sourceTree = "<group>"; };
 		99A625282C0FC046008263E1 /* FloatingPlaceholderTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPlaceholderTextField.swift; sourceTree = "<group>"; };
+		99D419802C17C78A00D2F1F1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		99D419822C17CD0300D2F1F1 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		99D419842C1904DF00D2F1F1 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		99D419862C191C0C00D2F1F1 /* CustomErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomErrors.swift; sourceTree = "<group>"; };
+		99D419882C19234D00D2F1F1 /* PasswordResetPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetPopup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +126,7 @@
 		0A899A5D2C01527F00B7FD5F /* Enum */ = {
 			isa = PBXGroup;
 			children = (
+				99D419862C191C0C00D2F1F1 /* CustomErrors.swift */,
 				0A899A5E2C01532100B7FD5F /* FirestoreKeys.swift */,
 			);
 			path = Enum;
@@ -154,6 +165,9 @@
 				9908CF732BFC0EF600F4962A /* CoolvertApp.swift */,
 				9908CF792BFC112100F4962A /* SignUpView.swift */,
 				99A6251F2C076B78008263E1 /* AdditionalInfoView.swift */,
+				99D419802C17C78A00D2F1F1 /* HomeView.swift */,
+				99D419842C1904DF00D2F1F1 /* LoadingView.swift */,
+				99D419882C19234D00D2F1F1 /* PasswordResetPopup.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -201,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				99A0873B2C0132D800C79CB6 /* Roboto */,
+				99A625282C0FC046008263E1 /* FloatingPlaceholderTextField.swift */,
 				9979D17A2BFEB46B00EF1F7F /* BackgroundView.swift */,
 			);
 			path = Style;
@@ -232,7 +247,7 @@
 				99A625222C0E86EF008263E1 /* AuthenticationViewModel.swift */,
 				99A625242C0E8C53008263E1 /* SignUpViewModel.swift */,
 				99A625262C0E8EE5008263E1 /* AdditionalInfoViewModel.swift */,
-				99A625282C0FC046008263E1 /* FloatingPlaceholderTextField.swift */,
+				99D419822C17CD0300D2F1F1 /* UserProfile.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -340,8 +355,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				99A625232C0E86EF008263E1 /* AuthenticationViewModel.swift in Sources */,
+				99D419872C191C0C00D2F1F1 /* CustomErrors.swift in Sources */,
 				99A625292C0FC046008263E1 /* FloatingPlaceholderTextField.swift in Sources */,
+				99D419832C17CD0300D2F1F1 /* UserProfile.swift in Sources */,
 				99A625272C0E8EE5008263E1 /* AdditionalInfoViewModel.swift in Sources */,
+				99D419852C1904DF00D2F1F1 /* LoadingView.swift in Sources */,
+				99D419812C17C78A00D2F1F1 /* HomeView.swift in Sources */,
 				9908CF702BFC0EEE00F4962A /* FirebaseAuthActions.swift in Sources */,
 				9908CF7A2BFC112100F4962A /* SignUpView.swift in Sources */,
 				9908CF7C2BFC131A00F4962A /* ContentView.swift in Sources */,
@@ -350,6 +369,7 @@
 				99A0872C2C00B6E500C79CB6 /* AppDelegate.swift in Sources */,
 				0A899A5F2C01532100B7FD5F /* FirestoreKeys.swift in Sources */,
 				9908CF712BFC0EEE00F4962A /* FirestoreActions.swift in Sources */,
+				99D419892C19234D00D2F1F1 /* PasswordResetPopup.swift in Sources */,
 				9908CF772BFC0EF600F4962A /* CoolvertApp.swift in Sources */,
 				0A899A622C0154BD00B7FD5F /* InvertextoAPI.swift in Sources */,
 				99A625202C076B78008263E1 /* AdditionalInfoView.swift in Sources */,

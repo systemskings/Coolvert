@@ -65,20 +65,20 @@ struct SignUpView: View {
                     .padding(.vertical)
                 }
                 .padding()
-
-
+                
+                
                 FloatingPlaceholderTextField(text: $viewModel.name, placeholder: "Nome")
                 
-
+                
                 FloatingPlaceholderTextField(text: $viewModel.cpfCnpj, placeholder: "CPF / CNPJ")
                 
                 
                 FloatingPlaceholderTextField(text: $viewModel.email, placeholder: "Email")
                 
-
+                
                 FloatingPlaceholderTextField(text: $viewModel.password, placeholder: "Senha")
                 
-
+                
                 FloatingPlaceholderTextField(text: $viewModel.confirmPassword, placeholder: "Confirme a Senha")
                 
                 HStack {
@@ -101,16 +101,6 @@ struct SignUpView: View {
 }
 
 extension View {
-//    func customTextFieldStyle() -> some View {
-//        self
-//            .padding()
-//            .background(Color.color2)
-//            .cornerRadius(8)
-//            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.color9, lineWidth: 0.3))
-//            .padding(.horizontal)
-//            .autocapitalization(.none)
-//            .disableAutocorrection(true)
-//    }
     
     func customButtonStyle() -> some View {
         self
