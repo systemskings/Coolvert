@@ -4,7 +4,6 @@ struct HomeView: View {
     @EnvironmentObject var viewModel: AuthenticationViewModel
     
     let user: UserProfile
-    let firebaseAuth = FirebaseAuthActions()
 
     var body: some View {
         VStack {
@@ -17,16 +16,16 @@ struct HomeView: View {
                 .padding()
 
             Button(action: {
-                            viewModel.signOut()
-                        }) {
-                            Text("Logout")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.red)
-                                .foregroundColor(.white)
-                                .cornerRadius(8)
-                        }
-                        .padding()
+                viewModel.signOut()
+            }) {
+                Text("Logout")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.red)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            .padding()
         }
     }
 }

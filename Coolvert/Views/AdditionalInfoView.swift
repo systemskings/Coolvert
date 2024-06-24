@@ -10,6 +10,7 @@ import FirebaseAuth
 
 struct AdditionalInfoView: View {
     @EnvironmentObject var viewModel: AdditionalInfoViewModel
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     
     let user: UserProfile
     
@@ -54,7 +55,13 @@ struct AdditionalInfoView: View {
                     .padding()
                 
                 Button(action: {
-                    viewModel.saveAdditionalUserData(user: user)
+                    viewModel.saveAdditionalUserData(user: user) { success in
+                        if success {
+                            authViewModel.loadUserProfile(uid: user.uid) { updatedUser in
+                                authViewModel.viewState = .signedIn(updatedUser)
+                            }
+                        }
+                    }
                 }) {
                     Text("Salvar")
                         .padding()
@@ -72,4 +79,5 @@ struct AdditionalInfoView: View {
         }
     }
 }
+
 

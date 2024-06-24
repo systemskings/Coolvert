@@ -1,49 +1,39 @@
-//
-//  ContentView.swift
-//  Coolvert
-//
-//  Created by Alysson Reis on 10/05/2024.
-//
-
 import SwiftUI
 import GoogleSignIn
 import GoogleSignInSwift
 
 struct ContentView: View {
-
     @StateObject private var viewModel = AuthenticationViewModel()
     @StateObject private var additionalInfoViewModel = AdditionalInfoViewModel()
-    @State private var email: String = ""
-    @State private var errorMessage: String = ""
     
     var body: some View {
-        ZStack {
-            Group {
-                if viewModel.isSignedIn {
-                    if viewModel.showAdditionalInfoView {
-                        if let userProfile = viewModel.userProfile {
-                            AdditionalInfoView(user: userProfile)
-                                .environmentObject(additionalInfoViewModel)
-                        }
-                    } else {
-                        if let userProfile = viewModel.userProfile {
-                            HomeView(user: userProfile)
-                                .environmentObject(viewModel)
-                        } else {
-                            Text("Carregando dados do usuário...")
-                        }
+        NavigationStack {
+            ZStack {
+                switch viewModel.viewState {
+                case .loading:
+                    LoadingView()
+                case .signedIn(let userProfile):
+                    HomeView(user: userProfile)
+                        .environmentObject(viewModel)
+                case .showAdditionalInfo(let userProfile):
+                    AdditionalInfoView(user: userProfile)
+                        .environmentObject(additionalInfoViewModel)
+                        .environmentObject(viewModel)
+                case .error(let message):
+                    ErrorView(errorMessage: message) {
+                        viewModel.viewState = .login
                     }
-                } else {
+                case .login:
                     loginView
                 }
             }
-            .environmentObject(viewModel)
-            
-            if viewModel.isLoading {
-                LoadingView()
-            }
+            .navigationBarHidden(true)
+        }
+        .onAppear {
+            viewModel.checkUserStatus()
         }
     }
+    
     
     private var loginView: some View {
         BackgroundView {
@@ -61,16 +51,10 @@ struct ContentView: View {
                     .frame(width: 260, height: 260)
                     .padding(.bottom, 10)
                 
-                // Email TextField
                 FloatingPlaceholderTextField(text: $viewModel.email, placeholder: "Email")
-                
-                // Password SecureField
                 FloatingPlaceholderTextField(text: $viewModel.password, placeholder: "Senha")
                 
-                // Login Button
-                Button(action: {
-                    viewModel.signIn()
-                }) {
+                Button(action: viewModel.signIn) {
                     Text("Entrar")
                         .frame(maxWidth: 260)
                         .padding()
@@ -79,13 +63,9 @@ struct ContentView: View {
                         .cornerRadius(50)
                 }
                 .padding(.horizontal)
-                .padding(.top, 40)
+                .padding(.top, 30)
                 
-                // Login with Google Button
-                Button(action: {
-                    viewModel.signInWithGoogle()
-                    viewModel.showAdditionalInfoView = true
-                }){
+                Button(action: viewModel.signInWithGoogle) {
                     HStack {
                         Image("google")
                             .resizable()
@@ -108,14 +88,10 @@ struct ContentView: View {
                 Spacer()
                 
                 HStack {
-                    Button(action: {
-                        viewModel.sendPasswordReset()
-                    }) {
+                    Button(action: viewModel.sendPasswordReset) {
                         Text("Esqueceu sua senha?")
                             .foregroundColor(Color.color9)
                     }
-                    
-
                     
                     Spacer()
                     

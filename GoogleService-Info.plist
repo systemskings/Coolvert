@@ -3,9 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>713434890367-g9t0n4hd4duj3cjjfej1e6gjb00kmqmn.apps.googleusercontent.com</string>
+	<string>713434890367-lvelvur8ukedr505s5ks2ehqcat6n4f2.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.713434890367-g9t0n4hd4duj3cjjfej1e6gjb00kmqmn</string>
+	<string>com.googleusercontent.apps.713434890367-lvelvur8ukedr505s5ks2ehqcat6n4f2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>713434890367-q3k6pm2981df5sh63cpbdl9u2d6h6h6g.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyB11BknEVaWK9vZvJLaUd2pqh-O6Vkd4xU</string>
 	<key>GCM_SENDER_ID</key>
@@ -19,15 +21,15 @@
 	<key>STORAGE_BUCKET</key>
 	<string>coolvert-355fb.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:713434890367:ios:cdf5a9f179fb6d68ffbf4a</string>
 </dict>
