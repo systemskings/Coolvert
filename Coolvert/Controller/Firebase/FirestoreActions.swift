@@ -25,15 +25,15 @@ class FirestoreActions {
             }
     }
     
-    func updateUserField(uid: String, value: Any, field: String) {
-        firestore.collection(FirestoreKeys.table_users.rawValue)
-            .document(uid)
-            .updateData([field: value]) { error in
-                if let error = error {
-                    print("Erro ao atualizar o campo \(field): \(error.localizedDescription)")
-                } else {
-                    print("Campo \(field) atualizado com sucesso!")
+    func uploadDataUser(uid: String, data: [String: Any], completion: @escaping (Result<Void, Error>) -> Void) {
+            firestore.collection(FirestoreKeys.table_users.rawValue)
+                .document(uid)
+                .setData(data) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(()))
+                    }
                 }
-            }
-    }
+        }
 }

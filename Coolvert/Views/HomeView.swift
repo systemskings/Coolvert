@@ -2,30 +2,42 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var viewModel: AuthenticationViewModel
-    
-    let user: UserProfile
+    @StateObject private var firestoreService = FirestoreService()
+
+    var user: UserProfile
 
     var body: some View {
-        VStack {
-            Text("Bem-vindo, \(user.name)!")
-                .font(.largeTitle)
-                .padding()
-
-            Text("Tipo de Cliente: \(user.clientTypeDescription)")
-                .font(.title2)
-                .padding()
-
-            Button(action: {
-                viewModel.signOut()
-            }) {
-                Text("Logout")
-                    .frame(maxWidth: .infinity)
+        NavigationView {
+            VStack {
+                Text("Bem-vindo, \(user.name)!")
+                    .font(.largeTitle)
                     .padding()
-                    .background(Color.red)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
+
+                Text("Tipo de Cliente: \(user.clientTypeDescription)")
+                    .font(.title2)
+                    .padding()
+
+                List(firestoreService.users) { user in
+                    UserCell(user: user)
+                }
+                .listStyle(PlainListStyle())
+
+                Button(action: {
+                    viewModel.signOut()
+                }) {
+                    Text("Logout")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.red)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                .padding()
             }
-            .padding()
+            .onAppear {
+                firestoreService.fetchUsers(excluding: user.uid)
+            }
+            .navigationBarHidden(true)
         }
     }
 }

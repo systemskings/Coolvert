@@ -16,6 +16,9 @@
 		9908CF7C2BFC131A00F4962A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9908CF7B2BFC131A00F4962A /* ContentView.swift */; };
 		9908CF862BFC228600F4962A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 992BD5C12BEE8F5A000F44FD /* Assets.xcassets */; };
 		992BD5C52BEE8F5A000F44FD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 992BD5C42BEE8F5A000F44FD /* Preview Assets.xcassets */; };
+		992C13E62C2CF26700560031 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C13E52C2CF26700560031 /* FirestoreService.swift */; };
+		992C13E82C2CF2DE00560031 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C13E72C2CF2DE00560031 /* UserCell.swift */; };
+		992C13EC2C2CF66000560031 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992C13EB2C2CF66000560031 /* UserModel.swift */; };
 		99647ABD2C26456400531B5D /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99647ABC2C26456400531B5D /* ErrorView.swift */; };
 		99647ABF2C271F9C00531B5D /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 99647ABE2C271F9C00531B5D /* GoogleSignIn */; };
 		99647AC12C271F9C00531B5D /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 99647AC02C271F9C00531B5D /* GoogleSignInSwift */; };
@@ -66,6 +69,9 @@
 		992BD5BA2BEE8F59000F44FD /* Coolvert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coolvert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		992BD5C12BEE8F5A000F44FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		992BD5C42BEE8F5A000F44FD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		992C13E52C2CF26700560031 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		992C13E72C2CF2DE00560031 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		992C13EB2C2CF66000560031 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		99647ABC2C26456400531B5D /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		9979D17A2BFEB46B00EF1F7F /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		99A0872B2C00B6E500C79CB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +154,7 @@
 				9908CF6C2BFC0EEE00F4962A /* FirebaseAuthActions.swift */,
 				9908CF6D2BFC0EEE00F4962A /* FirestoreActions.swift */,
 				99A0872B2C00B6E500C79CB6 /* AppDelegate.swift */,
+				992C13E52C2CF26700560031 /* FirestoreService.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -219,6 +226,7 @@
 				99A0873B2C0132D800C79CB6 /* Roboto */,
 				99A625282C0FC046008263E1 /* FloatingPlaceholderTextField.swift */,
 				9979D17A2BFEB46B00EF1F7F /* BackgroundView.swift */,
+				992C13E72C2CF2DE00560031 /* UserCell.swift */,
 			);
 			path = Style;
 			sourceTree = "<group>";
@@ -251,6 +259,7 @@
 				99A625262C0E8EE5008263E1 /* AdditionalInfoViewModel.swift */,
 				99D419822C17CD0300D2F1F1 /* UserProfile.swift */,
 				99647ABC2C26456400531B5D /* ErrorView.swift */,
+				992C13EB2C2CF66000560031 /* UserModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -364,6 +373,8 @@
 				99A625272C0E8EE5008263E1 /* AdditionalInfoViewModel.swift in Sources */,
 				99D419852C1904DF00D2F1F1 /* LoadingView.swift in Sources */,
 				99D419812C17C78A00D2F1F1 /* HomeView.swift in Sources */,
+				992C13E62C2CF26700560031 /* FirestoreService.swift in Sources */,
+				992C13EC2C2CF66000560031 /* UserModel.swift in Sources */,
 				9908CF702BFC0EEE00F4962A /* FirebaseAuthActions.swift in Sources */,
 				9908CF7A2BFC112100F4962A /* SignUpView.swift in Sources */,
 				9908CF7C2BFC131A00F4962A /* ContentView.swift in Sources */,
@@ -376,6 +387,7 @@
 				99D419892C19234D00D2F1F1 /* PasswordResetPopup.swift in Sources */,
 				9908CF772BFC0EF600F4962A /* CoolvertApp.swift in Sources */,
 				0A899A622C0154BD00B7FD5F /* InvertextoAPI.swift in Sources */,
+				992C13E82C2CF2DE00560031 /* UserCell.swift in Sources */,
 				99A625202C076B78008263E1 /* AdditionalInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

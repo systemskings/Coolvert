@@ -1,10 +1,3 @@
-//
-//  SignUpViewModel.swift
-//  Coolvert
-//
-//  Created by Alysson Reis on 03/06/2024.
-//
-
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
@@ -18,7 +11,6 @@ class SignUpViewModel: ObservableObject {
     @Published var errorMessage: String = ""
     @Published var isCheckedEmpresa: Bool = false
     @Published var isCheckedArtista: Bool = false
-    @Published var requiresAdditionalInfo: Bool = false
     @Published var showAlert: Bool = false
     @Published var alertMessage: String = ""
     @Published var navigateToLogin: Bool = false
@@ -44,50 +36,48 @@ class SignUpViewModel: ObservableObject {
         
         let userType = isCheckedEmpresa ? 0 : 1
         
-        // Backoff exponencial
-        var retryCount = 0
-        let maxRetries = 5
-        
-        func attemptSignUp() {
-            firebaseAuth.signUp(withEmail: email, password: password) { result in
-                switch result {
-                case .success(let user):
-                    user.sendEmailVerification { error in
-                        if let error = error {
-                            self.errorMessage = error.localizedDescription
-                            return
-                        }
-                        self.alertMessage = "Um e-mail de verificação foi enviado para \(self.email). Por favor, verifique sua caixa de entrada."
-                        self.showAlert = true
-                        self.saveUserData(uid: user.uid, userType: userType)
-                    }
-                case .failure(let error):
-                    if retryCount < maxRetries {
-                        retryCount += 1
-                        let delay = Double(retryCount) * 2.0
-                        DispatchQueue.global().asyncAfter(deadline: .now() + delay) {
-                            attemptSignUp()
-                        }
-                    } else {
-                        self.errorMessage = error.localizedDescription
-                    }
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+                return
+            }
+            
+            guard let user = authResult?.user else {
+                self.errorMessage = "Erro ao criar usuário."
+                return
+            }
+            
+            user.sendEmailVerification { error in
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    return
                 }
+                self.alertMessage = "Um e-mail de verificação foi enviado para \(self.email). Por favor, verifique sua caixa de entrada."
+                self.showAlert = true
+                self.saveUserData(uid: user.uid, userType: userType)
             }
         }
-        
-        attemptSignUp()
     }
-
     
     func saveUserData(uid: String, userType: Int) {
-        firestoreActions.uploadDataUser(uid: uid, email: email, name: name, cpfCnpj: cpfCnpj, userType: userType) { result in
-            switch result {
-            case .success:
-                self.clearFields()
-                self.requiresAdditionalInfo = false
-                self.navigateToLogin = true
-            case .failure(let error):
+        let db = Firestore.firestore()
+        let userData: [String: Any] = [
+            FirestoreKeys.field_users_name.rawValue: name,
+            FirestoreKeys.field_users_email.rawValue: email,
+            FirestoreKeys.field_users_cpfcnpj.rawValue: cpfCnpj,
+            FirestoreKeys.field_users_usertype.rawValue: userType,
+            "createdAt": FieldValue.serverTimestamp(),
+            FirestoreKeys.field_users_requires_additional_info.rawValue: false
+        ]
+        
+        db.collection("users").document(uid).setData(userData) { error in
+            if let error = error {
                 self.errorMessage = "Erro ao salvar os dados do usuário: \(error.localizedDescription)"
+            } else {
+                self.clearFields()
+                DispatchQueue.main.async {
+                    self.navigateToLogin = true
+                }
             }
         }
     }

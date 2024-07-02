@@ -1,14 +1,5 @@
-//
-//  SignUpView.swift
-//  Coolvert
-//
-//  Created by Alysson Reis on 20/05/2024.
-//
-
 import SwiftUI
 import FirebaseCore
-import FirebaseAuth
-import FirebaseFirestore
 
 struct SignUpView: View {
     @StateObject private var viewModel = SignUpViewModel()
@@ -83,11 +74,6 @@ struct SignUpView: View {
                     Text(viewModel.errorMessage)
                         .foregroundColor(.red)
                         .padding()
-                    
-                    // Use navigationDestination to navigate to ContentView
-                    NavigationLink(value: viewModel.navigateToLogin, label: {
-                        EmptyView()
-                    })
                 }
                 .padding()
                 .alert(isPresented: $viewModel.showAlert) {
